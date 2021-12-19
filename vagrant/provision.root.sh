@@ -39,6 +39,8 @@ mv  /var/lib/docker  /var/lib/docker.org
 ln  -s   /ext-hdd/data/docker  /var/lib/docker
 rm  -rf  /var/lib/docker.org
 
+sudo  systemctl  restart  docker
+
 sudo  chmod  1777  /ext-hdd/data
 sudo  gpasswd  -a  vagrant  docker
 
