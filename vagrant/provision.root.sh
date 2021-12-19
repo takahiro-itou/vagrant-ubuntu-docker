@@ -26,6 +26,13 @@ echo  -e  "tmpfs\t/ramdisk\ttmpfs\trw,size=2048m,x-gvfs-show\t0\t0"  \
 sudo  mount  -a
 
 # Docker
+
+cat  << __EOF__  |  sudo  tee  daemon.json
+{
+    "data-root" : "/ext-hdd/data/docker"
+}
+__EOF__
+
 ps  aux  | grep  docker
 rsync  -av  /var/lib/docker/  /ext-hdd/data/docker/
 mv  /var/lib/docker  /var/lib/docker.org
