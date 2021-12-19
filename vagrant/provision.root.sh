@@ -27,7 +27,7 @@ sudo  mount  -a
 
 # Docker
 
-cat  << __EOF__  |  sudo  tee  daemon.json
+cat  << __EOF__  |  sudo  tee  /etc/docker/daemon.json
 {
     "data-root" : "/ext-hdd/data/docker"
 }
