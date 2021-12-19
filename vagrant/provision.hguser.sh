@@ -23,6 +23,7 @@ echo  "Initialize User: ${HOSTNAME}  ${newUser}"
 newUserAddOpts="-g ${newUserGroup}  -d /home/${newUser}  -s /bin/bash"
 sudo  useradd  ${newUserAddOpts}  -m  ${newUser}
 eval  newUserHome=~${newUser}
+sudo  gpasswd  -a  ${newUser}  docker
 
 # ユーザーのパスワードを設定する。
 newPasswd=${userPass}
