@@ -1,7 +1,8 @@
 #!/bin/bash  -xu
 
-scriptDir=$(dirname  $0)
-vagrantDir=${scriptDir}/../vagrant
+script_dir=$(dirname  $0)
+vagrantDir="${script_dir}/../vagrant"
+
 pushd  ${vagrantDir}
 
 time  vagrant  halt
