@@ -1,8 +1,9 @@
 #!/bin/bash  -xu
 
-scriptDir=$(dirname  $0)
-vagrantDir=${scriptDir}/../vagrant
-pushd  ${vagrantDir}
+script_dir=$(dirname  "$0")
+vagrant_dir="${script_dir}/../vagrant"
+
+pushd  "${vagrant_dir}"
 mkdir  -p  /cygdrive/w/Vagrant/ubuntu-gui/vagrant
 
 time  vagrant  resume ; echo 0
