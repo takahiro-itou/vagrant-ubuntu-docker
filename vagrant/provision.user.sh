@@ -1,12 +1,12 @@
-#! /bin/bash  -xue
+#!/bin/bash  -xue
 
-echo  Provisioning  ${USER} for ${HOSTNAME}
-test  -f  ${HOME}/.provision.user  &&  exit 0
+echo  "Provisioning  ${USER} for ${HOSTNAME}"
+test  -f  "${HOME}/.provision.user"  &&  exit 0
 
-for srcDir in  /tmp/data/home/vagrant  ; do
-    if  test -d ${srcDir} ; then
-        chmod  -R   go-rwx  ${srcDir}
-        rsync  -av  ${srcDir}/  ${HOME}/
+for src_dir in  /tmp/data/home/vagrant  ; do
+    if  test -d ${src_dir} ; then
+        chmod  -R   go-rwx  ${src_dir}
+        rsync  -av  ${src_dir}/  ${HOME}/
     fi
 done
 
@@ -15,4 +15,4 @@ if  test -d ${HOME}/.ssh ; then
     chmod  700  ${HOME}/.ssh
 fi
 
-date  >  ${HOME}/.provision.user
+date  >  "${HOME}/.provision.user"
