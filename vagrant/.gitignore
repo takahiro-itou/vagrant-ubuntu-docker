@@ -1,5 +1,6 @@
 
 /.vagrant/
+/data.tar.xz
 /disk
 /ubuntu-bionic-18.04-cloudimg-console.log
 
