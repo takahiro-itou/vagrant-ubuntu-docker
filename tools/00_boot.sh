@@ -3,9 +3,9 @@
 script_dir=$(dirname  $0)
 vagrant_dir="${script_dir}/../vagrant"
 
-pushd  "${vagrant_dir}"
-mkdir  -p  /cygdrive/w/Vagrant/ubuntu-gui/vagrant
+pushd "${vagrant_dir}"
+mkdir -p /cygdrive/w/Vagrant/ubuntu-gui/vagrant
 
-time  vagrant  up ; echo 0
+time  vagrant up ; echo $?
 
 popd
