@@ -3,7 +3,7 @@
 echo  Provisioning  ${USER} for ${HOSTNAME}
 test  -f  ${HOME}/.provision.user  &&  exit 0
 
-for srcDir in  /tmp/VagrantConfig  /tmp/data/home/vagrant  ; do
+for srcDir in  /tmp/data/home/vagrant  ; do
     if  test -d ${srcDir} ; then
         chmod  -R   go-rwx  ${srcDir}
         rsync  -av  ${srcDir}/  ${HOME}/
