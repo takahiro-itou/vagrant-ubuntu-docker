@@ -1,4 +1,4 @@
-#!/bin/bash  -xu
+#!/bin/bash  -xue
 
 script_dir=$(dirname  "$0")
 vagrant_dir="${script_dir}/../vagrant"
@@ -8,7 +8,7 @@ project_base_dir=$(readlink -f "${script_dir}/..")
 
 env WORKDIR='/cygdrive/w/Vagrant'   \
     /bin/bash -xue "${vagrant_dir}/setup-userdata.sh"   \
-    ;
+    || exit $?
 
 pushd "${vagrant_dir}"
 mkdir -p /cygdrive/w/Vagrant/ubuntu-gui/vagrant

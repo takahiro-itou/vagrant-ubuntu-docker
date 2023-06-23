@@ -9,8 +9,6 @@ workdir=${WORKDIR:-'/tmp'}
 
 userfile_src_dir='data'
 userfile_archive_file="${vagrant_dir}/data.tar.xz"
-conf_src_dir="${project_base_dir}/data"
-conf_trg_dir="${tempdir}/${userfile_src_dir}"
 
 ##
 ##  仮想マシンへ転送するディレクトリを用意する
@@ -20,6 +18,9 @@ rm -f "${userfile_archive_file}"
 
 mkdir -p "${workdir}"
 tempdir=$(mktemp -d "${workdir}/vagrant.XXXXXXXXXX")
+
+conf_src_dir="${project_base_dir}/data"
+conf_trg_dir="${tempdir}/${userfile_src_dir}"
 
 # プロジェクト内の所定のディレクトリの内容を、
 # 作成した作業用ディレクトリにコピーする。
