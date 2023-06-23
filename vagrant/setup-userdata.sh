@@ -11,6 +11,7 @@ workdir=${WORKDIR:-'/tmp'}
 ##  仮想マシンへ転送するディレクトリを用意する
 ##
 
+mkdir -p "${workdir}"
 tempdir=$(mktemp -d "${workdir}/vagrant.XXXXXXXXXX")
 
 # プロジェクト内の所定のディレクトリの内容を、
