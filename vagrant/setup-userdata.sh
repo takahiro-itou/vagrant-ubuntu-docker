@@ -20,12 +20,12 @@ conf_src_dir="${project_base_dir}/data"
 userfile_src_dir='data'
 conf_trg_dir="${tempdir}/${userfile_src_dir}"
 
-rsync -av "${conf_src_dir}/" "${conf_trg_dir}/"
+rsync -a "${conf_src_dir}/" "${conf_trg_dir}/"
 
 # プロジェクトの外にある所定のディレクトリも、
 # 作業用ディレクトリにコピーする。
 
-rsync -av ~/VagrantConfig/ "${conf_trg_dir}/home/vagrant/"
+rsync -a ~/VagrantConfig/ "${conf_trg_dir}/home/vagrant/"
 
 # 転送するディレクトリをアーカイブしておく
 
@@ -34,5 +34,8 @@ userfile_archive_file="${vagrant_dir}/data.tar.xz"
 rm -f "${userfile_archive_file}"
 
 pushd "${tempdir}"
-time  tar -cJvf "${userfile_archive_file}" "${userfile_src_dir}/"
+time  tar -cJf "${userfile_archive_file}" "${userfile_src_dir}/"
 popd
+
+# 不要になった作業ディレクトリを削除
+rm -rf "${tempdir}"
