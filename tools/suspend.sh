@@ -3,8 +3,8 @@
 script_dir=$(dirname  "$0")
 vagrant_dir="${script_dir}/../vagrant"
 
-pushd  "${vagrant_dir}"
+pushd "${vagrant_dir}"
 
-time  vagrant  suspend
+time  vagrant suspend
 
 popd
