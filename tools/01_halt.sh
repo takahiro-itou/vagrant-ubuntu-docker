@@ -1,6 +1,6 @@
 #!/bin/bash  -xu
 
-script_dir=$(dirname  "$0")
+script_dir="$(dirname "$0")"
 vagrant_dir="${script_dir}/../vagrant"
 
 pushd "${vagrant_dir}"

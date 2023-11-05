@@ -1,6 +1,6 @@
 #!/bin/bash  -xue
 
-script_dir=$(dirname  "$0")
+script_dir="$(dirname "$0")"
 vagrant_dir="${script_dir}/../vagrant"
 
 # 所定のディレクトリを、仮想マシンへ転送する用意をする
