@@ -44,10 +44,4 @@ sudo  systemctl  restart  docker
 sudo  chmod  1777  /ext-hdd/data
 sudo  gpasswd  -a  vagrant  docker
 
-# Ruby for GitHub Jekyll
-
-sudo  apt  install -y  \
-    ruby  ruby-bundler  ruby-dev    \
-    ;
-
 date  >  /root/.provision.root
