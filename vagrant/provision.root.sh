@@ -7,13 +7,26 @@ echo  Provisioning $HOSTNAME
 sudo  timedatectl  set-timezone Asia/Tokyo
 
 # New HDD (/dev/sdc)
-cat <<  __EOF__  |  tee  /dev/shm/check.md5
+cat <<  __EOF__  |  tee  /dev/shm/zero.md5
 53e979547d8c2ea86560ac45de08ae25 *-
 __EOF__
 
-sudo  parted  --script --align optimal  /dev/sdc -- mklabel gpt
-sudo  parted  --script --align optimal  /dev/sdc -- mkpart primary ext3 1 -1
-sudo  mkfs.ext3    /dev/sdc1
+cat <<  __EOF__  |  tee  /dev/shm/check_mbr.md5
+0a4dbaf15747a2f282529ebec196a2d4 *-
+__EOF__
+
+# MBR/GPT ヘッダ 3 セクタ 768 バイトが全部ゼロなら未初期化と判定
+if sudo dd if=/dev/sdc bs=512 count=3 | md5sum -c /dev/shm/zero.md5 ; then
+    sudo  parted --script --align optimal /dev/sdc -- mklabel gpt
+    sudo  parted --script --align optimal /dev/sdc -- mkpart primary ext3 1 -1
+    sudo  mkfs.ext3     /dev/sdc1
+else
+    echo "Disk Already Formatted."  1>&2
+    exit  1
+fi
+
+# GPT ヘッダは毎回変わるようなので、MBR ヘッダだけ確認する
+sudo  dd if=/dev/sdc bs=512 count=1 | md5sum -c /dev/shm/check_mbr.md5
 
 sudo  mkdir  -p    /ext-hdd/data
 sudo  chmod  1777  /ext-hdd/data
@@ -47,16 +60,5 @@ sudo  systemctl  restart  docker
 
 sudo  chmod  1777  /ext-hdd/data
 sudo  gpasswd  -a  vagrant  docker
-
-##  検証作業
-if dd if=/dev/sdd  bs=512 count=3 | md5sum -c /dev/shm/check.md5 ; then
-    sudo  parted --script --align optimal /dev/sdd -- mklabel gpt
-    sudo  parted --script --align optimal /dev/sdd -- mkpart primary ext3 1 -1
-    sudo  mkfs.ext3 /dev/sdd1
-else
-    echo "Disk Already Formatted."  1>&2
-    exit  1
-fi
-sudo  dd if=/dev/sdd  bs=512 count=3 | md5sum -b
 
 date  >  /root/.provision.root
