@@ -11,11 +11,6 @@ cat <<  __EOF__  |  tee  /dev/shm/check.md5
 53e979547d8c2ea86560ac45de08ae25 *-
 __EOF__
 
-if dd if=/dev/sdd  bs=512 count=3 | md5sum -c /dev/shm/check.md5 ; then
-    echo "Disk Already Formatted."  1>&2
-    exit  1
-fi
-
 sudo  parted  --script --align optimal  /dev/sdc -- mklabel gpt
 sudo  parted  --script --align optimal  /dev/sdc -- mkpart primary ext3 1 -1
 sudo  mkfs.ext3    /dev/sdc1
@@ -52,5 +47,16 @@ sudo  systemctl  restart  docker
 
 sudo  chmod  1777  /ext-hdd/data
 sudo  gpasswd  -a  vagrant  docker
+
+##  検証作業
+if dd if=/dev/sdd  bs=512 count=3 | md5sum -c /dev/shm/check.md5 ; then
+    sudo  parted --script --align optimal /dev/sdd -- mklabel gpt
+    sudo  parted --script --align optimal /dev/sdd -- mkpart primary ext3 1 -1
+    sudo  mkfs.ext3 /dev/sdd1
+else
+    echo "Disk Already Formatted."  1>&2
+    exit  1
+fi
+sudo  dd if=/dev/sdd  bs=512 count=3 | md5sum -b
 
 date  >  /root/.provision.root
