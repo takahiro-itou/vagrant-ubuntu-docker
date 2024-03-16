@@ -11,6 +11,11 @@ cat <<  __EOF__  |  tee  /dev/shm/check.md5
 53e979547d8c2ea86560ac45de08ae25 *-
 __EOF__
 
+if dd if=/dev/sdd  bs=512 count=3 | md5sum -c /dev/shm/check.md5 ; then
+    echo "Disk Already Formatted."  1>&2
+    exit  1
+fi
+
 sudo  parted  --script --align optimal  /dev/sdc -- mklabel gpt
 sudo  parted  --script --align optimal  /dev/sdc -- mkpart primary ext3 1 -1
 sudo  mkfs.ext3    /dev/sdc1
