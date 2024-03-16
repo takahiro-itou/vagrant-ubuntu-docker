@@ -7,6 +7,10 @@ echo  Provisioning $HOSTNAME
 sudo  timedatectl  set-timezone Asia/Tokyo
 
 # New HDD (/dev/sdc)
+cat <<  __EOF__  |  tee  /dev/shm/check.md5
+53e979547d8c2ea86560ac45de08ae25 *-
+__EOF__
+
 sudo  parted  --script --align optimal  /dev/sdc -- mklabel gpt
 sudo  parted  --script --align optimal  /dev/sdc -- mkpart primary ext3 1 -1
 sudo  mkfs.ext3    /dev/sdc1
