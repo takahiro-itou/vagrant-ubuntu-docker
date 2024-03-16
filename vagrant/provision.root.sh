@@ -16,6 +16,7 @@ cat <<  __EOF__  |  tee  /dev/shm/check_mbr.md5
 __EOF__
 
 # MBR/GPT ヘッダ 3 セクタ 768 バイトが全部ゼロなら未初期化と判定
+sudo  dd if=/dev/sdc bs=512 count=3 | md5sum -b
 if sudo dd if=/dev/sdc bs=512 count=3 | md5sum -c /dev/shm/zero.md5 ; then
     sudo  parted --script --align optimal /dev/sdc -- mklabel gpt
     sudo  parted --script --align optimal /dev/sdc -- mkpart primary ext3 1 -1
@@ -26,6 +27,7 @@ else
 fi
 
 # GPT ヘッダは毎回変わるようなので、MBR ヘッダだけ確認する
+sudo  dd if=/dev/sdc bs=512 count=1 | md5sum -b
 sudo  dd if=/dev/sdc bs=512 count=1 | md5sum -c /dev/shm/check_mbr.md5
 
 sudo  mkdir  -p    /ext-hdd/data
