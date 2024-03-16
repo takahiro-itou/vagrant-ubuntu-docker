@@ -22,7 +22,7 @@ if sudo dd if=/dev/sdc bs=512 count=3 | md5sum -c /dev/shm/zero.md5 ; then
     sudo  mkfs.ext3     /dev/sdc1
 else
     echo "Disk Already Formatted."  1>&2
-    exit  1
+    sleep  5
 fi
 
 # GPT ヘッダは毎回変わるようなので、MBR ヘッダだけ確認する
