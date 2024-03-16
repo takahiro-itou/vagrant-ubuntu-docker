@@ -7,18 +7,22 @@ echo  Provisioning $HOSTNAME
 sudo  timedatectl  set-timezone Asia/Tokyo
 
 # New HDD (/dev/sdc)
-cat <<  __EOF__  |  tee  /dev/shm/check.md5
+cat <<  __EOF__  |  tee  /dev/shm/zero.md5
 53e979547d8c2ea86560ac45de08ae25 *-
 __EOF__
 
-if dd if=/dev/sdd  bs=512 count=3 | md5sum -c /dev/shm/check.md5 ; then
-    echo "Disk Already Formatted."  1>&2
-    exit  1
+if sudo dd if=/dev/sdd  bs=512 count=3 | md5sum -c /dev/shm/zero.md5 ; then
+    echo "Disk Not Formatted."  1>&2
+
+    sudo  parted --script --align optimal /dev/sdc -- mklabel gpt
+    sudo  parted --script --align optimal /dev/sdc -- mkpart primary ext3 1 -1
+    sudo  mkfs.ext3 /dev/sdc1
+else
+    echo "Disk Already Formated."   1>&2
+    sleep  5
 fi
 
-sudo  parted  --script --align optimal  /dev/sdc -- mklabel gpt
-sudo  parted  --script --align optimal  /dev/sdc -- mkpart primary ext3 1 -1
-sudo  mkfs.ext3    /dev/sdc1
+sudo  dd if=/dev/sdd  bs=512 count=3 | md5sum -b
 
 sudo  mkdir  -p    /ext-hdd/data
 sudo  chmod  1777  /ext-hdd/data
