@@ -6,7 +6,7 @@ test  -f  "${HOME}/.provision.user"  &&  exit 0
 for src_dir in  /tmp/data/home/vagrant  ; do
     if  test -d ${src_dir} ; then
         chmod  -R   go-rwx  ${src_dir}
-        rsync  -av  ${src_dir}/  ${HOME}/
+        rsync  -a   ${src_dir}/  ${HOME}/
     fi
 done
 
