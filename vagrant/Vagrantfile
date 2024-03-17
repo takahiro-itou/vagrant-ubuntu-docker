@@ -27,7 +27,7 @@ Vagrant.configure("2") do |config|
     #
     # ディスクを追加する
     #
-    disk_file = './disk/ubuntu-docker-sdb.vdi'
+    disk_file = './disk/ubuntu-docker-sdc.vdi'
     unless File.exists?(disk_file)
         v.customize [
             'createmedium',     "disk",
