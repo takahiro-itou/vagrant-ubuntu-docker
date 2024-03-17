@@ -3,6 +3,8 @@
 
 load  File.expand_path("DetectOS.rb")  if File.exists?("DetectOS.rb")
 
+printf("ARGV = %s", ARGV);
+
 Vagrant.configure("2") do |config|
   config.vm.box = "takahiro-itou/ubuntu-jammy64-docker"
   config.vm.box_download_options = {"ssl-revoke-best-effort" => true}
