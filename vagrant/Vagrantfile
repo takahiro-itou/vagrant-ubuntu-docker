@@ -16,8 +16,10 @@ Vagrant.configure("2") do |config|
   end
 
   config.trigger.before :destroy do
-    vm_info = `vboxmanage showvminfo vagrant-ubuntu-docker --machinereadable | grep storagecontrollerportcount0`
+    vm_info = `vboxmanage showvminfo vagrant-ubuntu-docker --machinereadable | grep storagecontrollerportcount1`
+    vm_disk_info = `vboxmanage showvminfo vagrant-ubuntu-docker --machinereadable | grep SCSI-2-0`
     printf("vm_info=%s\n", vm_info)
+    printf("vm_disk_info=%s\n", vm_disk_info)
   #   value = Integer(vm_info.split("=")[1].gsub('"','').chomp())
   #   raise Vagrant::Errors::VagrantError.new, "drive attached - cannot be destroyed" if value > 1
   end
