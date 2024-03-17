@@ -58,13 +58,23 @@ Vagrant.configure("2") do |config|
         ]
     end
     if ARGV.include?('destroy')
+      disk_file='./disk/empty.vdi'
+      unless File.exists?(disk_file)
+          v.customize [
+              'createmedium',     "disk",
+              '--filename',       disk_file,
+              '--size',           1,
+              '--format',         'VDI',
+          ]
+      end
+      puts 'Dettach before Destory...'
       v.customize [
           'storageattach',    :id,
           '--storagectl',     'SCSI',
           '--port',           2,
           '--device',         0,
           '--type',           'hdd',
-          '--medium',         'none',
+          '--medium',         disk_file,
       ]
     else
     v.customize [
