@@ -33,6 +33,18 @@ Vagrant.configure("2") do |config|
       "--paravirtprovider", "kvm",
     ]
 
+    config.trigger.after :halt do
+      puts 'dettach drive'
+      v.customize [
+          'storageattach',    :id,
+          '--storagectl',     'SCSI',
+          '--port',           2,
+          '--device',         0,
+          '--type',           'hdd',
+          '--medium',         'none',
+      ]
+    end
+
     #
     # ディスクを追加する
     #
