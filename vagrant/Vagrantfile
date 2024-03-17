@@ -52,7 +52,7 @@ Vagrant.configure("2") do |config|
           '--port',           2,
           '--device',         0,
           '--type',           'hdd',
-          '--medium',         none,
+          '--medium',         'none',
       ]
     else
     v.customize [
