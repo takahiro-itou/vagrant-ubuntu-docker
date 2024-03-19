@@ -1,7 +1,7 @@
 ##  -*-  coding: utf-8; mode: ruby -*-  ##
 ##  vi: set ft=ruby
 
-load  File.expand_path("DetectOS.rb")  if File.exists?("DetectOS.rb")
+load  File.expand_path("common/DetectOS.rb")  if File.exists?("common/DetectOS.rb")
 
 
 machine_id_file = ".vagrant/machines/default/virtualbox/id"
