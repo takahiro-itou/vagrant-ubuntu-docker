@@ -14,4 +14,6 @@ module  MachineInfo
         end
         return  machine_id
     end
+
+    module_function :machine_id
 end
