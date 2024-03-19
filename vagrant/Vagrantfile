@@ -5,10 +5,7 @@ load  File.expand_path("common/DetectOS.rb")  if File.exists?("common/DetectOS.r
 
 load  File.expand_path("common/MachineInfo.rb")  if File.exists?("common/MachineInfo.rb")
 
-machine_id_file = ".vagrant/machines/default/virtualbox/id"
-if File.exists?(machine_id_file)
-    machine_id = File.read(machine_id_file)
-end
+machine_id = MachineInfo.machine_id
 
 printf("ARGV = %s\n", ARGV);
 
