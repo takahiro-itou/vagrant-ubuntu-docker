@@ -12,7 +12,6 @@ printf("ARGV = %s\n", ARGV);
 Vagrant.configure("2") do |config|
   config.vm.box = "takahiro-itou/ubuntu-jammy64-docker"
   config.vm.box_download_options = {"ssl-revoke-best-effort" => true}
-  config.vm.box_version = "1.1.0"
 
   config.trigger.after :up do |trigger|
     trigger.name =" Finished Message"
