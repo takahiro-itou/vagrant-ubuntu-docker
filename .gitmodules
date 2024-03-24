@@ -1,0 +1,3 @@
+[submodule "vagrant/common"]
+	path = vagrant/common
+	url = git@gitlab.com:takahiro-itou-vagrant/vagrant-common.git
