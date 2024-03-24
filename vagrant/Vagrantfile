@@ -90,6 +90,12 @@ Vagrant.configure("2") do |config|
         '--medium',         disk_file,
     ]
     end
+
+    v.customize [
+      'setextradata',     :id,
+      'VBoxInternal/Devices/VMMDev/0/Config/GetHostTimeDisabled',
+      0
+    ]
   end
 
   config.vm.boot_timeout = 900
