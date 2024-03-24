@@ -5,6 +5,10 @@ test  -f /root/.provision.root  &&  exit 0
 echo  Provisioning $HOSTNAME
 
 sudo  timedatectl  set-timezone Asia/Tokyo
+sudo  timedatectl  set-ntp  true
+sudo  systemctl restart systemd-timesyncd.service
+systemctl status  systemd-timesyncd.service
+
 
 # New HDD (/dev/sdc)
 cat <<  __EOF__  |  tee  /dev/shm/zero.md5
