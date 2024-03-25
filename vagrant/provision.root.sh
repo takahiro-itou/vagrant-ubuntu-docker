@@ -29,7 +29,7 @@ if sudo dd if=/dev/sdc bs=512 count=3 | md5sum -c /dev/shm/zero.md5 ; then
     sudo  mkfs.ext3     /dev/sdc1
 else
     echo "Disk Already Formatted."  1>&2
-    sleep  5
+    sleep 5
 fi
 
 # GPT ヘッダは毎回変わるようなので、MBR ヘッダだけ確認する
@@ -38,13 +38,9 @@ sudo  dd if=/dev/sdc bs=512 count=1 | md5sum -c /dev/shm/check_mbr.md5
 
 sudo  mkdir  -p    /ext-hdd/data
 sudo  chmod  1777  /ext-hdd/data
-ls -al /ext-hdd/
-sleep 5
 
 echo  -e  "/dev/sdc1\t/ext-hdd/data\text3\tdefaults\t0\t0"  \
     |  sudo  tee -a  /etc/fstab
-ls -al /ext-hdd/
-sleep 5
 
 # RamDisk
 sudo  mkdir        /ramdisk
@@ -52,12 +48,7 @@ sudo  chmod  1777  /ramdisk
 echo  -e  "tmpfs\t/ramdisk\ttmpfs\trw,size=2048m,x-gvfs-show\t0\t0"  \
     |  sudo  tee -a  /etc/fstab
 
-ls -al /ext-hdd/
-sleep 5
-
 sudo  mount  -a
-ls -al /ext-hdd/
-sleep 5
 
 # Docker
 
