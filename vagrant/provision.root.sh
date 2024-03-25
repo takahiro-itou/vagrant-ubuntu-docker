@@ -56,6 +56,8 @@ ls -al /ext-hdd/
 sleep 5
 
 sudo  mount  -a
+ls -al /ext-hdd/
+sleep 5
 
 # Docker
 
