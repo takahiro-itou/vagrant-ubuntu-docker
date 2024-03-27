@@ -1,0 +1,3 @@
+[submodule "vagrant/common"]
+	path = vagrant/common
+	url = ../vagrant-common.git
