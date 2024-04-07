@@ -1,6 +1,6 @@
 #! /bin/bash  -xue
 
-test  -f "/root/.provision/root"  &&  exit 0
+test  -f "/root/.provision/docker"  &&  exit 0
 
 # Docker
 cat  << __EOF__  |  sudo  tee  /etc/docker/daemon.json
@@ -21,4 +21,4 @@ sudo  chmod  1777  /ext-hdd/data
 sudo  gpasswd  -a  vagrant  docker
 
 mkdir -p "/root/.provision"
-date  >  "/root/.provision/root"
+date  >  "/root/.provision/docker"
