@@ -26,4 +26,6 @@ load  File.expand_path('common/AttachNewhdd.rb')
 
 # Provisioning(s)
 load  File.expand_path('common/UploadFiles.rb')
+load  File.expand_path('common/SetupUbuntu.rb')
+load  File.expand_path('common/RamDisk.rb')
 load  File.expand_path('common/SetupUsers.rb')
