@@ -14,6 +14,7 @@ pushd "${vagrant_dir}"
 mkdir -p /cygdrive/w/Vagrant/ubuntu-gui/vagrant
 
 time  vagrant destroy -f
+sleep 10
 time  vagrant up ; echo $?
 
 popd

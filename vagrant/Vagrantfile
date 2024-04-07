@@ -17,7 +17,7 @@ end
 
 load  File.expand_path('common/CommonCustomize.rb')
 
-$disk_image_file = './disk/ubuntu-docker-sdc.vdi'
+$disk_image_file = File.expand_path('./disk/ubuntu-docker-sdc.vdi')
 load  File.expand_path('common/AttachNewhdd.rb')
 
 # Provisioning(s)
