@@ -1,110 +1,36 @@
 ##  -*-  coding: utf-8; mode: ruby -*-  ##
 ##  vi: set ft=ruby
 
-load  File.expand_path("common/DetectOS.rb")  if File.exists?("common/DetectOS.rb")
-
-load  File.expand_path("common/MachineInfo.rb")  if File.exists?("common/MachineInfo.rb")
-
-machine_id = MachineInfo.machine_id
-
-printf("ARGV = %s\n", ARGV);
-
 Vagrant.configure("2") do |config|
   config.vm.box = "takahiro-itou/ubuntu-jammy64-docker"
-  config.vm.box_download_options = {"ssl-revoke-best-effort" => true}
-
-  config.trigger.after :up do |trigger|
-    trigger.name =" Finished Message"
-    trigger.info = "Machine is up!"
-  end
-
-  config.trigger.after :halt do |trigger|
-    trigger.run = {inline: "VBoxManage storageattach '#{machine_id}'" +
-      " --storagectl 'SCSI' --port 2 --device 0 --type hdd --medium none"
-    }
-  end
-
-  config.trigger.before :destroy do
-    vm_info = `vboxmanage showvminfo vagrant-ubuntu-docker --machinereadable | grep storagecontrollerportcount1`
-    vm_disk_info = `vboxmanage showvminfo vagrant-ubuntu-docker --machinereadable | grep SCSI-2-0`
-    printf("vm_info=%s\n", vm_info)
-    printf("vm_disk_info=%s\n", vm_disk_info)
-  #   value = Integer(vm_info.split("=")[1].gsub('"','').chomp())
-  #   raise Vagrant::Errors::VagrantError.new, "drive attached - cannot be destroyed" if value > 1
-  end
 
   config.vm.provider "virtualbox" do |v|
     v.name   = "vagrant-ubuntu-docker"
     v.memory = "3072"
-
     v.gui    = false
-    v.customize [
-      "modifyvm",           :id,
-      "--cableconnected1",  "on",
-      "--hwvirtex",         "on",
-      "--nestedpaging",     "on",
-      "--largepages",       "on",
-      "--ioapic",           "on",
-      "--pae",              "on",
-      "--paravirtprovider", "kvm",
-    ]
-
-    #
-    # ディスクを追加する
-    #
-    disk_file = './disk/ubuntu-docker-sdc.vdi'
-    unless File.exists?(disk_file)
-      v.customize [
-        'createmedium',     'disk',
-        '--filename',       disk_file,
-        '--size',           50 * 1024,
-        '--format',         'VDI',
-      ]
-    end
-
-    if ARGV.include?('destroy')
-    else
-      v.customize [
-        'storageattach',    :id,
-        '--storagectl',     'SCSI',
-        '--port',           2,
-        '--device',         0,
-        '--type',           'hdd',
-        '--medium',         disk_file,
-      ]
-    end
-
-    #
-    # 時刻をホスト側と同期する
-    #
-    v.customize [
-      'setextradata',     :id,
-      'VBoxInternal/Devices/VMMDev/0/Config/GetHostTimeDisabled',
-      0
-    ]
   end
-
-  config.vm.boot_timeout = 900
 
   config.vm.network(:forwarded_port, guest: 22, host: 11222, id: "ssh")
   config.vm.network("private_network", ip: "192.168.33.12")
-
-  config.vm.provision("userfiles1", type: "file",
-                      source: "data.tar.xz",
-                      destination: "/tmp/")
-  config.vm.provision("userfiles2", type: "shell",
-                      path: "provision.data.sh",
-                      privileged: false)
-
-  config.vm.provision("root", type: "shell",
-                      path: "provision.root.sh",
-                      privileged: true)
-  config.vm.provision("user", type: "shell",
-                      path: "provision.user.sh",
-                      privileged: false)
-  config.vm.provision("hguser", type: "shell",
-                      path: "provision.hguser.sh",
-                      privileged: false)
   config.vm.synced_folder(".", "/vagrant", disabled: true)
 
+  # For Blog (bundle exec jekyll serve)
+  config.vm.network(:forwarded_port, guest: 4000, host: 4012)
+end
+
+load  File.expand_path('common/CommonCustomize.rb')
+
+$disk_image_file = File.expand_path('./disk/ubuntu-docker-sdc.vdi')
+load  File.expand_path('common/AttachIDEHdd.rb')
+
+# Provisioning(s)
+load  File.expand_path('common/UploadFiles.rb')
+load  File.expand_path('common/SetupUbuntu.rb')
+load  File.expand_path('common/RamDisk.rb')
+load  File.expand_path('common/SetupUsers.rb')
+
+Vagrant.configure("2") do |config|
+  config.vm.provision("docker", type: "shell",
+                      path: "provision/docker.sh",
+                      privileged: true)
 end
