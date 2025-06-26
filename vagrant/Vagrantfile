@@ -6,7 +6,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider "virtualbox" do |v|
     v.name   = "vagrant-ubuntu-docker"
-    v.memory = "3072"
+    v.memory = "24576"
 
     v.customize [
       "modifyvm",               :id,
