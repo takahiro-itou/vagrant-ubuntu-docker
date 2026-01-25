@@ -9,12 +9,12 @@ project_base_dir=$(readlink -f "${script_dir}/..")
 env     \
     COPY_CONFIG_DIR='yes'                       \
     PROJECT_BASE_DIR="${project_base_dir}"      \
-    WORKDIR='/cygdrive/w/Vagrant'               \
+    WORKDIR='/cygdrive/u/WorkRoot/Vagrant'      \
     /bin/bash -xue "${vagrant_dir}/common/setup-userdata.sh"    \
     || exit $?
 
 pushd "${vagrant_dir}"
-mkdir -p /cygdrive/w/Vagrant/ubuntu-gui/vagrant
+mkdir -p /cygdrive/u/WorkRoot/Vagrant/ubuntu-gui/vagrant
 
 time  vagrant destroy -f
 sleep 10
